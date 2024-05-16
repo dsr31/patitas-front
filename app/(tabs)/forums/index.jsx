@@ -3,12 +3,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import 'react-native-reanimated';
 import { router,Link,Redirect } from 'expo-router';
-import images from '../../constants/images';
-import styles from '../../styles/tabs';
-import icons from '../../constants/icons';
-import ForumCard from '../../components/forumCard';
+import images from '../../../constants/images';
+import styles from '../../../styles/tabs';
+import icons from '../../../constants/icons';
+import ForumCard from '../../../components/forumCard';
 
-const Forum = () => {
+const Forums = () => {
   return (
     <>
       <SafeAreaView style = { styles.container }>
@@ -94,4 +94,4 @@ const Forum = () => {
   )
 }
 
-export default Forum
+export default Forums

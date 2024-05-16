@@ -19,6 +19,8 @@ import huellas from "../assets/icons/huellas.png";
 import estrella from "../assets/icons/estrella.png";
 import prohibido from "../assets/icons/prohibido.png";
 import compartir from "../assets/icons/compartir.png";
+import responder from "../assets/icons/responder.png";
+
 
 
 
@@ -47,4 +49,5 @@ export default {
   estrella,
   prohibido,
   compartir,
+  responder,
 };

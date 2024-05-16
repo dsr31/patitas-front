@@ -1,15 +1,16 @@
 import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { useLocalSearchParams } from 'expo-router'
+import {React, useState} from 'react'
+import { useLocalSearchParams, Stack } from 'expo-router'
 import images from '../../../../constants/images';
-import styles from '../../../../styles/data';
+import styles from '../../../../styles/dataPost';
 import icons from '../../../../constants/icons';
+import ImageModal from '../../../../components/imageModal';
 
 const DataPost = ({params}) => {
   let currentPost = useLocalSearchParams();
   //console.log(currentPost);
 
-  const typePost = '';
+  const typePost = 'SE BUSCA';
   const statusPost = '';
   const name = 'MANCHITAS';
   const imagesPost = [images.img_default_1, images.img_default_2, images.img_default_2, images.img_default_2];
@@ -26,12 +27,48 @@ const DataPost = ({params}) => {
   const email = 'miriamcontact9@gmail.com';
   const phone = '986 45 45 34';
 
+  let colorTypePost = '#E44040';
+  if(typePost == 'ENCONTRADO'){
+    colorTypePost = '#DBA10C';
+  }
+  else if(typePost == 'BUSCANDO PAREJA'){
+    colorTypePost = '#DE58A0'
+  }
+  else if(typePost == 'ADÓPTAME'){
+    colorTypePost = '#4082E4';
+  }
+
+  // Variables para el modal
+  const [modalVisible, setModalVisible] = useState (false);
+  const [selectedImage, setSelectedImage] = useState (null);
+
+  const pressedImageController = (image) => {
+    setSelectedImage(image);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedImage(null);
+  };
+  //////////////////////////
+
   return (
-    <SafeAreaView style = {{ width: '100%', height: '100%' }}>
+    <SafeAreaView style = {{ width: '100%', height: '100%' }} >
+        <Stack.Screen options={{    
+            headerTitle: "ATRÁS", 
+            headerRight: () => (
+                <View style = {{ width: 200, backgroundColor: colorTypePost, alignItems: 'center'}}>
+                    <Text style = {{ fontFamily: 'Inter-Black', fontSize: 16, color: '#fff' }}>{typePost}</Text>
+                </View>
+            ) }} 
+        />
         <ScrollView style = {{ flex: 1, marginHorizontal: 10 }}>
             <ScrollView horizontal>
                 {imagesPost.map((image, index) => (
-                    <Image key = { index } source = { image } style = { styles.imagePost } />
+                    <TouchableOpacity key = { index } onPress = {() => pressedImageController(image)}>
+                        <Image key = { index } source = { image } style = { styles.imagePost } />
+                    </TouchableOpacity>
                 ))}
             </ScrollView>
             <Text style = { styles.petName }>{name}</Text>
@@ -90,6 +127,9 @@ const DataPost = ({params}) => {
                     <Text>Reportar Post</Text>
                 </TouchableOpacity>
             </View>
+            {selectedImage && (
+                <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />
+            )}
         </ScrollView>
     </SafeAreaView>
   )

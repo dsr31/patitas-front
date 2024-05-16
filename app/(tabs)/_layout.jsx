@@ -68,9 +68,9 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen 
-          name="forum"
+          name="forums"
           options={{
-            title: 'forum',
+            title: 'forums',
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 

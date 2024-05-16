@@ -19,7 +19,7 @@ const PostCard = ({ content:{ id, name, photo, description, type, location } }) 
   }
 
   const goToThePost = () => {(
-    router.push({ pathname: `./posts/post/${name}`, params: name })
+    router.push({ pathname: `(tabs)/posts/post/${name}`, params: name })
   )}
 
   return (
