@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native'
 import styles from '../styles/createCard'
 import icons from '../constants/icons'
+import { router } from 'expo-router'
 
 const CreateCard = ({ content:{ id_type } }) => {
   let colorPrimaryCreate = '#58CF72';
   let colorSecondaryCreate = '#92FBAA';
   let imageCreate = icons.crearMascota;
   let nameCreate  = 'AÑADIR UNA NUEVA MASCOTA';
+  let redirectRoute = '';
 
   if(id_type == 2){
     colorPrimaryCreate = '#DE5858';
@@ -41,8 +43,13 @@ const CreateCard = ({ content:{ id_type } }) => {
     nameCreate  = 'PUBLICAR UN FORO';
   }
 
+  const goToCreate = () => {(
+    //router.push({ pathname: `(tabs)/posts/post/${name}`, params: name })
+    router.push({ pathname: `./createContent/create/${id_type}`, params: id_type}) 
+  )}
+
   return (
-    <View style = { [styles.postShadow, styles.postCard, {backgroundColor: colorPrimaryCreate}]}>
+    <TouchableOpacity style = { [styles.postShadow, styles.postCard, {backgroundColor: colorPrimaryCreate}]} onPress = { goToCreate } >
         <View style = { [styles.imageContainer, {backgroundColor: colorSecondaryCreate}] }>
             <Image
                 source = { imageCreate }
@@ -50,7 +57,7 @@ const CreateCard = ({ content:{ id_type } }) => {
             />
         </View>
         <Text numberOfLines={1} style = { styles.createTitle }>{nameCreate}</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 

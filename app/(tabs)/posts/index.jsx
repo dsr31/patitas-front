@@ -1,14 +1,30 @@
 import { TouchableOpacity, Image, ScrollView, StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React from 'react'
+import { React, useState } from 'react'
 import 'react-native-reanimated';
 import { router,Link,Redirect } from 'expo-router';
 import images from '../../../constants/images';
 import styles from '../../../styles/tabs';
 import icons from '../../../constants/icons';
 import PostCard from '../../../components/postCard';
+import PostFilterModal from '../../../components/postFilterModal';
 
 const Posts = () => {
+  // Variables para el modal
+  const [modalVisible, setModalVisible] = useState (false);
+  const [selectedImage, setSelectedImage] = useState (null);
+
+  const pressedImageController = (val) => {
+    setSelectedImage(true);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedImage(null);
+  };
+  //////////////////////////
+
   return (
     <>
       <SafeAreaView style = { styles.container }>
@@ -18,10 +34,13 @@ const Posts = () => {
             style  = { styles.logoHeader }
           />        
           <View style={styles.spacer} />
-          <Image 
-            source = { icons.filter }
-            style  = { styles.iconHeader } 
-          />
+          <TouchableOpacity onPress = {() => pressedImageController(true)}>
+            <Image 
+              source = { icons.filter }
+              style  = { styles.iconHeader } 
+            />
+          </TouchableOpacity>
+          
         </View>
         <View style = { styles.titlePageSection }>
           <View style = { [ styles.lineSection, styles.lineSectionL ] }/>
@@ -47,6 +66,9 @@ const Posts = () => {
             />
           </View>
           </View>
+          {selectedImage && (
+            <PostFilterModal visible = { modalVisible } closeImageModal = { closeModal } />
+          )}
       </SafeAreaView>
     </>
   )

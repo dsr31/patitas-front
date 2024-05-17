@@ -90,6 +90,41 @@ const styles = StyleSheet.create({
         marginHorizontal: 5, 
         marginBottom: 10,
         fontSize: 12,
+    },
+    simpleCard: {
+        backgroundColor: '#D5C59B', 
+        marginVertical: 10, 
+        width: 350, 
+        flex: 1, 
+        flexDirection: 'row', 
+        borderRadius: 20, 
+        paddingVertical: 15, 
+    },
+    simpleImageContainer: {
+        paddingHorizontal: 10,
+    },
+    simpleButtonSelect: { 
+        fontFamily: 'Inter-Black', 
+        fontSize: 20,
+    },
+    simpleButtonSelectContainer: { 
+        width: 200, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginVertical: 10, 
+        paddingVertical: 15, 
+        paddingHorizontal: 10, 
+        backgroundColor: '#C1AB73',
+    },
+    simplePetName: { 
+        maxWidth: 230, 
+        fontFamily: 'Inter-Black', 
+        fontSize: 20,
+    },
+    myPetsTitle: {
+        fontFamily: 'Inter-Black',
+        fontSize: 18,
+        marginVertical: 10,
     }
 });
 

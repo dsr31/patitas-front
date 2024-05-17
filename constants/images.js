@@ -5,6 +5,7 @@ import img_default_1 from "../assets/images/dog_default.png";
 import img_default_2 from "../assets/images/cat_1.jpeg";
 import img_default_3 from "../assets/images/cat_2.png";
 import img_default_4 from "../assets/images/usuarioPerfil.png";
+import img_default_0 from "../assets/images/anadirFoto.png";
 
 
 export default {
@@ -15,4 +16,5 @@ export default {
   img_default_2,
   img_default_3,
   img_default_4,
+  img_default_0,
 };

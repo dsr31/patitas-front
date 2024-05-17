@@ -3,10 +3,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import 'react-native-reanimated';
 import { router,Link,Redirect } from 'expo-router';
-import images from '../../constants/images';
-import styles from '../../styles/tabs';
-import icons from '../../constants/icons';
-import CreateCard from '../../components/createCard';
+import images from '../../../constants/images';
+import styles from '../../../styles/tabs';
+import icons from '../../../constants/icons';
+import CreateCard from '../../../components/createCard';
 
 const CreateContent = () => {
   return (
@@ -18,10 +18,6 @@ const CreateContent = () => {
             style  = { styles.logoHeader }
           />        
           <View style={styles.spacer} />
-          <Image 
-            source = { icons.filter }
-            style  = { styles.iconHeader } 
-          />
         </View>
         <View style = { styles.titlePageSection }>
           <View style = { [ styles.lineSection, styles.lineSectionL ] }/>
@@ -58,7 +54,7 @@ const CreateContent = () => {
               )}
             />
           </View>
-          </View>
+        </View>
       </SafeAreaView>
     </>
   )

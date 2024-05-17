@@ -20,7 +20,7 @@ import estrella from "../assets/icons/estrella.png";
 import prohibido from "../assets/icons/prohibido.png";
 import compartir from "../assets/icons/compartir.png";
 import responder from "../assets/icons/responder.png";
-
+import cerrar from "../assets/icons/close.png";
 
 
 
@@ -50,4 +50,5 @@ export default {
   prohibido,
   compartir,
   responder,
+  cerrar,
 };
