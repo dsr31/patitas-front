@@ -5,7 +5,7 @@ import styles from '../styles/reviewCard'
 import icons from '../constants/icons'
 
 const ReviewCard = ({ content:{ id, text, author, username, rating } }) => {
-  
+  //prueba
   return (
     <View style = { styles.reviewCard }>
         <View style = { styles.upperRow }>
