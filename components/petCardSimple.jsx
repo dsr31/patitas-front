@@ -1,9 +1,12 @@
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react'
-import { Image } from 'react-native'
+import { router } from 'expo-router'
 import styles from '../styles/petCard'
 
-const PetCardSimple = ({ content:{ id, name, photo } }) => {
+const PetCardSimple = ({ content:{ id_pet , name, photo }, typePost }) => {
+  const goToSecondStep = () => {(
+    router.push({ pathname: `(tabs)/createContent/create/secondStep/secondStep`, params: { id_pet, typePost }})
+  )}
 
   return (
     <View style = { styles.simpleCard }>
@@ -18,7 +21,7 @@ const PetCardSimple = ({ content:{ id, name, photo } }) => {
                 <Text numberOfLines={1} style = { styles.simplePetName }>{name}</Text>
             </View>
             <View>
-                <TouchableOpacity style = { styles.simpleButtonSelectContainer }>
+                <TouchableOpacity style = { styles.simpleButtonSelectContainer } onPress = { goToSecondStep } >
                     <Text style = { styles.simpleButtonSelect }>ELEGIR</Text>
                     <Text style = { styles.simpleButtonSelect }>{'>'}</Text>
                 </TouchableOpacity>

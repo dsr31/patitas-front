@@ -20,13 +20,13 @@ const CreatePost = ({params}) => {
        <Text style = { styles.myPetsTitle }>MIS MASCOTAS</Text>
        <FlatList
             data = {[
-                { id: 1, name: 'PEPITO uyihu jik huijok jumkl, jiok lfdghgfh drgh rdggthgfgjf retatsyt restyj', photo: images.img_default_2, description: 'Soy un perrito muy pequeñito perdido entre sddfghnjmnhbsvfvgfhgmjhngbfvsdghmjghngbdfvsdfghmjhghnfgdbfsvdcfghnfngdfgtfhyjgrfsergdthjukughfgfrsedasfrgtgjhugygrf ', type: 'ENCONTRADO', location: 'Calle 3, direccion sur' },
-                { id: 3, name: 'PEPITO PEPITO PEPito', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' },
-                { id: 6, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' }
+                { id_pet: 1, name: 'PEPITO uyihu jik huijok jumkl, jiok lfdghgfh drgh rdggthgfgjf retatsyt restyj', photo: images.img_default_2, description: 'Soy un perrito muy pequeñito perdido entre sddfghnjmnhbsvfvgfhgmjhngbfvsdghmjghngbdfvsdfghmjhghnfgdbfsvdcfghnfngdfgtfhyjgrfsergdthjukughfgfrsedasfrgtgjhugygrf ', type: 'ENCONTRADO', location: 'Calle 3, direccion sur' },
+                { id_pet: 3, name: 'PEPITO PEPITO PEPito', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' },
+                { id_pet: 6, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' }
             ]}
-            keyExtractor = {(item) => item.id}
+            keyExtractor = {(item) => item.id_pet}
             renderItem = {({item}) => (
-                <PetCardSimple content = {item}/>
+                <PetCardSimple content = {item} typePost = { id_type }/>
             )}
         />
     </View>

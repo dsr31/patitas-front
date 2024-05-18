@@ -11,6 +11,9 @@ const CreateContentLayout = () => {
         <Stack.Screen
             name = 'create/[type]'
         />
+        <Stack.Screen
+            name = 'create/secondStep/secondStep'
+        />
     </Stack>
   )
 }
