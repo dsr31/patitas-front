@@ -5,11 +5,11 @@ import styles from '../styles/forumCard'
 import icons from '../constants/icons'
 import { router } from 'expo-router'
 
-const ForumCard = ({ content:{ id, title, photo, description, author, username } }) => {
+const ForumCard = ({ content:{ id_forum, title, images, content, name, username } }) => {
   let colorTypeforum = '#8D35E6';
   
   const goToTheForum = () => {(
-    router.push({ pathname: `(tabs)/forums/forum/${title}`, params: title })
+    router.push({ pathname: `(tabs)/forums/forum/${id_forum}`, params: id_forum })
   )}
 
   return (
@@ -19,27 +19,27 @@ const ForumCard = ({ content:{ id, title, photo, description, author, username }
       </View>
       <View style = { styles.forumContent }>
             <View style = { [styles.forumShadow, styles.forumContainerImage] }>
-                {photo !== '' && (
+                {images !== '' && (
                     <Image
-                        source = { photo }
+                        source = { images }
                         style = { styles.forumImage }
                     />
                 )}
             </View>
-            {photo !== '' ? (
+            {images !== '' ? (
                 <View style = { [styles.forumInfo, styles.forumShadow] }>
-                    <Text numberOfLines={5} style = { styles.forumDescription }>{description}</Text>
+                    <Text numberOfLines={5} style = { styles.forumDescription }>{content}</Text>
                     <View style = { styles.forumUser }>
                         <Image source={ icons.perfil } style = {{ width: 15, height: 15}} />
-                        <Text numberOfLines={1} style = { styles.textUser }>{author} - @{username}</Text>
+                        <Text numberOfLines={1} style = { styles.textUser }>{name} - @{username}</Text>
                     </View>
                 </View>
             ):
                 <View style = { [styles.forumInfo, styles.forumShadow, styles.forumInfoNoImage] }>
-                    <Text numberOfLines={5} style = { styles.forumDescription }>{description}</Text>
+                    <Text numberOfLines={5} style = { styles.forumDescription }>{content}</Text>
                     <View style = { styles.forumUser }>
                         <Image source={ icons.perfil } style = {{ width: 15, height: 15}} />
-                        <Text numberOfLines={1} style = { styles.textUser }>{author} - @{username}</Text>
+                        <Text numberOfLines={1} style = { styles.textUser }>{name} - @{username}</Text>
                     </View>
                 </View>
             }

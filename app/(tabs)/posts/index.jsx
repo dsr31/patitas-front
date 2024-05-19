@@ -1,6 +1,6 @@
-import { TouchableOpacity, Image, ScrollView, StyleSheet, Text, View, FlatList } from 'react-native';
+import { TouchableOpacity, Image, ScrollView, StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import 'react-native-reanimated';
 import { router,Link,Redirect } from 'expo-router';
 import images from '../../../constants/images';
@@ -10,6 +10,29 @@ import PostCard from '../../../components/postCard';
 import PostFilterModal from '../../../components/postFilterModal';
 
 const Posts = () => {
+
+  //Conexion base de datos
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch('http://192.168.1.66:4000/api/posts').then(
+      res => res.json()
+    ).then(
+      (resultado) => {
+        setLoading(false);
+        setData(resultado.body);
+      }, 
+      (error) => {
+        setLoading(true);
+        console.warn("Houston tenemos un problema en tablon de anuncios");
+      }
+    )
+  }, [])
+
+  const perro = () => {
+    console.log(data);
+  } 
+
   // Variables para el modal
   const [modalVisible, setModalVisible] = useState (false);
   const [selectedImage, setSelectedImage] = useState (null);
@@ -50,20 +73,26 @@ const Posts = () => {
         <View style = { styles.feed }>
           <View style = {{ marginTop: 50 }} />
           <View style = {{ height: '100%', backgroundColor: '#E2D8BE'}}>
-            <FlatList
-              data = {[
-                { id: 1, name: 'PEPITO uyihu jik huijok jumkl, jiok l', photo: images.img_default_2, description: 'Soy un perrito muy pequeñito perdido entre sddfghnjmnhbsvfvgfhgmjhngbfvsdghmjghngbdfvsdfghmjhghnfgdbfsvdcfghnfngdfgtfhyjgrfsergdthjukughfgfrsedasfrgtgjhugygrf ', type: 'ENCONTRADO', location: 'Calle 3, direccion sur' },
-                { id: 2, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' },
-                { id: 3, name: 'PEPITO', photo: images.img_default_3, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'ADÓPTAME', location: 'Calle 3, direccion sur rtghgrwfer gthyg wrgethnrgbgrfrgt hegrwfgetgnh rheg wergdtfhfedwfrgtfh rfefrgtghgrfe rgth' },
-                { id: 4, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'BUSCANDO PAREJA', location: 'Calle 3, direccion sur' },
-                { id: 5, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'CACA', location: 'Calle 3, direccion sur' },
-                { id: 6, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' }
-              ]}
-              keyExtractor = {(item) => item.id}
-              renderItem = {({item}) => (
-                <PostCard content = {item}/>
-              )}
-            />
+            {loading ? (
+              <ActivityIndicator size = "large"/>
+            ) : (
+              <FlatList
+                /*data = {[
+                  { id: 1, name: 'PEPITO uyihu jik huijok jumkl, jiok l', photo: images.img_default_2, description: 'Soy un perrito muy pequeñito perdido entre sddfghnjmnhbsvfvgfhgmjhngbfvsdghmjghngbdfvsdfghmjhghnfgdbfsvdcfghnfngdfgtfhyjgrfsergdthjukughfgfrsedasfrgtgjhugygrf ', type: 'ENCONTRADO', location: 'Calle 3, direccion sur' },
+                  { id: 2, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' },
+                  { id: 3, name: 'PEPITO', photo: images.img_default_3, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'ADÓPTAME', location: 'Calle 3, direccion sur rtghgrwfer gthyg wrgethnrgbgrfrgt hegrwfgetgnh rheg wergdtfhfedwfrgtfh rfefrgtghgrfe rgth' },
+                  { id: 4, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'BUSCANDO PAREJA', location: 'Calle 3, direccion sur' },
+                  { id: 5, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'CACA', location: 'Calle 3, direccion sur' },
+                  { id: 6, name: 'PEPITO', photo: images.img_default_1, description: 'Soy un perrito muy pequeñito perdido entre ', type: 'SE BUSCA', location: 'Calle 3, direccion sur' }
+                ]}
+                keyExtractor = {(item) => item.id}*/
+                data = {data}
+                keyExtractor = {(item) => item.id_post}
+                renderItem = {({item}) => (
+                  <PostCard content = {item}/>
+                )}
+              />
+            )}
           </View>
           </View>
           {selectedImage && (

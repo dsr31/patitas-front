@@ -1,5 +1,5 @@
 import { FlatList, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity } from 'react-native'
-import {React, useState} from 'react'
+import {React, useState, useEffect } from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router'
 import images from '../../../../constants/images';
 import styles from '../../../../styles/dataForum';
@@ -8,8 +8,45 @@ import ReplyCard from '../../../../components/replyCard';
 import ActionButtons from '../../../../components/actionButtons';
 import ImageModal from '../../../../components/imageModal';
 
-const ForumPost = () => {
+const ForumPost = ({params}) => {
+  let currentForum = useLocalSearchParams();
+  console.log(currentForum);
+  let id_forum = currentForum.data;
 
+  const [profileImage, setprofileImage] = useState();
+  const [name, setname] = useState();
+  const [username, setusername] = useState();
+  const [title, settitle] = useState();
+  const [content, setcontent] = useState();
+  const [imagesPost, setimagesPost] = useState();
+  const [replies, setreplies] = useState();// este vacio
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch(`http://192.168.1.66:4000/api/forums/${id_forum}`).then(
+      res => res.json()
+    ).then(
+      (resultado) => {
+        setLoading(false);
+        setprofileImage(resultado.body[0].profileImage);
+        setname(resultado.body[0].name);
+        setusername(resultado.body[0].username);
+        settitle(resultado.body[0].title);
+        setcontent(resultado.body[0].content);
+        setimagesPost(resultado.body[0].imagesPost);
+        //setreplies(resultado.body[0].replies);
+
+        console.log(resultado.body[0])
+      }, 
+      (error) => {
+        setLoading(true);
+        console.warn("Houston tenemos un problema en la pagina de foro");
+      }
+    )
+  }, [])
+
+  const profileImageStatic = images.img_default_4;
+  /*
   const profileImage = images.img_default_4;
   const author = 'Miriam Ramiress njihu uiji iojk jim ewsfega phy u gtfr';
   const username = 'miriamramirez13';
@@ -22,7 +59,7 @@ const ForumPost = () => {
     { id: 1, profile_pic: images.img_default_1, author: 'Esther', username: 'esther50', content: 'yooo, hablame al privado y te digo...'},
     { id: 2, profile_pic: images.img_default_3, author: 'Juan Manuel', username: 'jasper2000.j', content: '¿tienes epatulosca promodae cerca de casa? probablemente sus semillas le estén provocando urticaria'},
   ];
-
+  */
   // Variables para el modal
   const [modalVisible, setModalVisible] = useState (false);
   const [selectedImage, setSelectedImage] = useState (null);
@@ -51,11 +88,11 @@ const ForumPost = () => {
       <ScrollView style = {{ flex: 1, marginHorizontal: 10 }}>
         <View style = {{ flexDirection: 'row', marginTop: 10 }}>
           <Image 
-            source = { profileImage }
+            source = { profileImageStatic }
             style = { styles.profileImage }
           />
           <View style = { styles.userIDs }>
-            <Text numberOfLines={1} style = { styles.userIDsText }>{author}</Text>
+            <Text numberOfLines={1} style = { styles.userIDsText }>{name}</Text>
             <Text numberOfLines={1} style = { styles.usernameStyle }>@{username}</Text>
           </View>
         </View>
@@ -66,24 +103,24 @@ const ForumPost = () => {
           {content}
         </Text>
         <ScrollView horizontal>
-            {imagesPost.map((image, index) => (
+            {/*imagesPost.map((image, index) => (
               <TouchableOpacity key = { index } onPress = {() => pressedImageController(image)}>
                 <Image key = { index } source = { image } style = { styles.imageForum } />
               </TouchableOpacity>
-            ))}
+            ))*/}
         </ScrollView>
         <View style = { styles.line } />
         <ActionButtons />
         <View style = { styles.line } />
-        {replies.length > 0 ? (
+        {/*replies.length > 0 ? (
           replies.map((reply) => (
             <ReplyCard  key={reply.id} reply={reply} actionButtons={<ActionButtons />} />
           ))
-        ) : (
+        ) : (*/}
           <View style = { styles.noRepliesContainer }>
             <Text style = { styles.usernameStyle }>Sin respuestas.</Text>
           </View>
-        )}
+        {/*)}*/}
         {selectedImage && (
           <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />
         )}

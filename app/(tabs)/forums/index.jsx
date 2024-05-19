@@ -1,6 +1,6 @@
 import { TouchableOpacity, Image, ScrollView, StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import 'react-native-reanimated';
 import { router,Link,Redirect } from 'expo-router';
 import images from '../../../constants/images';
@@ -9,6 +9,26 @@ import icons from '../../../constants/icons';
 import ForumCard from '../../../components/forumCard';
 
 const Forums = () => {
+
+  //Conexion base de datos
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch('http://192.168.1.66:4000/api/forums').then(
+      res => res.json()
+    ).then(
+      (resultado) => {
+        setLoading(false);
+        setData(resultado.body);
+      }, 
+      (error) => {
+        setLoading(true);
+        console.warn("Houston tenemos un problema en tablon de foros");
+      }
+    )
+  }, [])
+
+
   return (
     <>
       <SafeAreaView style = { styles.container }>
@@ -32,7 +52,7 @@ const Forums = () => {
           <View style = {{ marginTop: 50 }} />
           <View style = {{ height: '100%', backgroundColor: '#E2D8BE'}}>
             <FlatList
-              data = {[
+              /*data = {[
                 {
                   id: 1, 
                   title: '¿Cómo saber la edad de mi gato? efrgtfh efsrgdfhgjm errfsgdtfh efrgdhn dsfgrh fergdhn fsrgdhn fsrgdhbn frgdhn ', 
@@ -82,7 +102,9 @@ const Forums = () => {
                   username: 'eljuanitomandarinomolamuchokoijuygtyfrdekjh',
                 },
               ]}
-              keyExtractor = {(item) => item.id}
+              keyExtractor = {(item) => item.id}*/
+              data = {data}
+              keyExtractor = {(item) => item.id_forum}
               renderItem = {({item}) => (
                 <ForumCard content = {item}/>
               )}

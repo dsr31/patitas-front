@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity } from 'react-native'
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router'
 import images from '../../../../constants/images';
 import styles from '../../../../styles/dataPost';
@@ -8,8 +8,9 @@ import ImageModal from '../../../../components/imageModal';
 
 const DataPost = ({params}) => {
   let currentPost = useLocalSearchParams();
-  //console.log(currentPost);
-
+  console.log(currentPost);
+  let id_post = currentPost.data;
+  /*
   const typePost = 'SE BUSCA';
   const statusPost = '';
   const name = 'MANCHITAS';
@@ -26,8 +27,78 @@ const DataPost = ({params}) => {
   const username = 'miriamramirez13';
   const email = 'miriamcontact9@gmail.com';
   const phone = '986 45 45 34';
+  */
+  const [typePost, settypePost] = useState();
+  const [statusPost, setstatusPost ] = useState();
+  const [name, setpetname ] = useState();
+  //const [imagesPost, setimagesPost] = useState();
+  const [postDescription, setpostDescription] = useState();
+  const [specie, setspecie] = useState();
+  const [race, setrace] = useState();
+  const [genre, setgenre] = useState();
+  const [dateAdd, setdateAdd] = useState();
+  const [petDescription, setpetDescription] = useState();
+  const [location, setlocation] = useState();
+  const [profileImage, setprofileImage] = useState();
+  const [author, setauthor] = useState();
+  const [username, setusername] = useState();
+  const [email, setemail] = useState();
+  const [phone, setphone] = useState();
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch(`http://192.168.1.66:4000/api/posts/${id_post}`).then(
+      res => res.json()
+    ).then(
+      (resultado) => {
+        setLoading(false);
+        if(resultado.body[0].post_type == 1){
+            settypePost('SE BUSCA');
+        }
+        else if(resultado.body[0].post_type == 2){
+            settypePost('ENCONTRADO');
+        }
+        else if(resultado.body[0].post_type == 3){
+            settypePost('BUSCANDO PAREJA');
+        }
+        else{
+            settypePost('ADÓPTAME');
+        }
+        setstatusPost(resultado.body[0].status);
+        setpetname(resultado.body[0].pet_name);
+        //setimagesPost(resultado.body[0].);
+        setpostDescription(resultado.body[0].content);
+        setspecie(resultado.body[0].specie_name);
+        setrace(resultado.body[0].race_name);
+        if(resultado.body[0].pet_genre == 1){
+            setgenre('MACHO');
+        }
+        else if(resultado.body[0].pet_genre == 2){
+            setgenre('HEMBRA');
+        }
+        else{
+            setgenre('DESCONOCIDO'); 
+        }
+        setdateAdd(resultado.body[0].date_add.substring(0, 10));
+        setpetDescription(resultado.body[0].pet_description);
+        setlocation(resultado.body[0].address);
+        //setprofileImage(resultado.body[0].);
+        setauthor(resultado.body[0].name);
+        setusername(resultado.body[0].username);
+        setemail(resultado.body[0].email);
+        setphone(resultado.body[0].phone);
+
+        console.log(resultado.body[0])
+      }, 
+      (error) => {
+        setLoading(true);
+        console.warn("Houston tenemos un problema");
+      }
+    )
+  }, [])
 
   let colorTypePost = '#E44040';
+  let imagesPost = [images.img_default_1];
   if(typePost == 'ENCONTRADO'){
     colorTypePost = '#DBA10C';
   }
