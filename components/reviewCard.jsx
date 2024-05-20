@@ -4,14 +4,14 @@ import { Image } from 'react-native'
 import styles from '../styles/reviewCard'
 import icons from '../constants/icons'
 
-const ReviewCard = ({ content:{ id, text, author, username, rating } }) => {
+const ReviewCard = ({ content:{ id_rating, description, name, username, rating } }) => {
   //prueba
   return (
     <View style = { styles.reviewCard }>
         <View style = { styles.upperRow }>
             <View style = { styles.userInfo }>
                 <Image source = { icons.perfil } style = { styles.icon }/>
-                <Text numberOfLines={1} ellipsizeMode="tail" style = { [styles.userInfoText,{maxWidth: 150}] }>{author}</Text>
+                <Text numberOfLines={1} ellipsizeMode="tail" style = { [styles.userInfoText,{maxWidth: 150}] }>{name}</Text>
                 <Text style = { styles.userInfoText }> - @</Text>
                 <Text numberOfLines={1} ellipsizeMode="tail" style = { [styles.userInfoText,{flex: 1}] }>{username}</Text>
             </View>
@@ -23,7 +23,7 @@ const ReviewCard = ({ content:{ id, text, author, username, rating } }) => {
         </View>
         <View  style = { styles.lowerRow }>
             <Text style = { styles.userRatingText }>
-                {text} 
+                {description} 
             </Text>
         </View>
     </View>

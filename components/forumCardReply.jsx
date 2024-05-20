@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native'
 import styles from '../styles/forumCard'
 import icons from '../constants/icons'
 
-const ForumCardReply = ({ content:{ id, title, photo, text, id_reply, date_reply, author, username } }) => {
+const ForumCardReply = ({ content:{ id_forum, title, content, forum_image_1, id_reply, id_user, name, username } }) => {
   let colorTypeforum = '#8D35E6';
+  let photo = '';
   
   return (
-    <View style = { styles.forumCard}>
+    <TouchableOpacity style = { styles.forumCard}>
       <View style = { [styles.titleforumCard, {backgroundColor: colorTypeforum}] }>
         {id_reply != 0 && (
             <Text numberOfLines={1} style = { styles.respondingText }>Respondiendo a: </Text>
@@ -26,23 +27,23 @@ const ForumCardReply = ({ content:{ id, title, photo, text, id_reply, date_reply
             </View>
             {photo !== '' ? (
                 <View style = { [styles.forumInfo, styles.forumShadow] }>
-                    <Text numberOfLines={5} style = { styles.forumDescription }>{text}</Text>
+                    <Text numberOfLines={5} style = { styles.forumDescription }>{content}</Text>
                     <View style = { styles.forumUser }>
                         <Image source={ icons.perfil } style = {{ width: 15, height: 15}} />
-                        <Text numberOfLines={1} style = { styles.textUser }>{author} - @{username}</Text>
+                        <Text numberOfLines={1} style = { styles.textUser }>{name} - @{username}</Text>
                     </View>
                 </View>
             ):
                 <View style = { [styles.forumInfo, styles.forumShadow, styles.forumInfoNoImage] }>
-                    <Text numberOfLines={5} style = { styles.forumDescription }>{text}</Text>
+                    <Text numberOfLines={5} style = { styles.forumDescription }>{content}</Text>
                     <View style = { styles.forumUser }>
                         <Image source={ icons.perfil } style = {{ width: 15, height: 15}} />
-                        <Text numberOfLines={1} style = { styles.textUser }>{author} - @{username}</Text>
+                        <Text numberOfLines={1} style = { styles.textUser }>{name} - @{username}</Text>
                     </View>
                 </View>
             }
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

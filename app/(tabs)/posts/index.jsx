@@ -29,9 +29,6 @@ const Posts = () => {
     )
   }, [])
 
-  const perro = () => {
-    console.log(data);
-  } 
 
   // Variables para el modal
   const [modalVisible, setModalVisible] = useState (false);

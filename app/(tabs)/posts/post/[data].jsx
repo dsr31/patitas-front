@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity, Linking } from 'react-native'
 import {React, useState, useEffect} from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router'
 import images from '../../../../constants/images';
@@ -8,7 +8,6 @@ import ImageModal from '../../../../components/imageModal';
 
 const DataPost = ({params}) => {
   let currentPost = useLocalSearchParams();
-  console.log(currentPost);
   let id_post = currentPost.data;
   /*
   const typePost = 'SE BUSCA';
@@ -87,8 +86,6 @@ const DataPost = ({params}) => {
         setusername(resultado.body[0].username);
         setemail(resultado.body[0].email);
         setphone(resultado.body[0].phone);
-
-        console.log(resultado.body[0])
       }, 
       (error) => {
         setLoading(true);
@@ -126,82 +123,88 @@ const DataPost = ({params}) => {
 
   return (
     <SafeAreaView style = {{ width: '100%', height: '100%' }} >
-        <Stack.Screen options={{    
-            headerTitle: "ATRÁS", 
-            headerRight: () => (
-                <View style = {{ width: 200, backgroundColor: colorTypePost, alignItems: 'center'}}>
-                    <Text style = {{ fontFamily: 'Inter-Black', fontSize: 16, color: '#fff' }}>{typePost}</Text>
-                </View>
-            ) }} 
-        />
-        <ScrollView style = {{ flex: 1, marginHorizontal: 10 }}>
-            <ScrollView horizontal>
-                {imagesPost.map((image, index) => (
-                    <TouchableOpacity key = { index } onPress = {() => pressedImageController(image)}>
-                        <Image key = { index } source = { image } style = { styles.imagePost } />
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
-            <Text style = { styles.petName }>{name}</Text>
-            <Text style = { styles.longText }>{postDescription}</Text>
-            <View style = { styles.dividerLine } />
-            <View>
-                <View style = { styles.containerProperty1 }>
-                    <View style = { styles.containerTitleProperty }><Text style = { styles.titleProperty }>ESPECIE:</Text><Text>{specie}</Text></View>
-                    <View style = { styles.containerTitleProperty }><Text style = { styles.titleProperty }>GÉNERO:</Text><Text>{genre}</Text></View>
-                </View>
-                <View  style = { styles.containerProperty1 }>
-                    <View style = { styles.containerTitleProperty }><Text style = { styles.titleProperty }>RAZA:</Text><Text>{race}</Text></View>
-                    <View style = {{ borderWidth: 1, borderColor: 'black', borderRadius: 15, paddingHorizontal: 35, paddingVertical: 10 }}><Text>{dateAdd}</Text></View>
-                </View>
-            </View>
-            <View style = {{ marginBottom: 10 }}>
-                <Text style = { styles.titleProperty }>DESCRIPCIÓN:</Text>
-                <Text style = { styles.longText }>{petDescription}</Text>
-            </View>
-            <View style = {{ marginBottom: 10 }}>
-                <Text style = { styles.titleProperty }>UBICACIÓN:</Text>
-                <Text style = { styles.longText }>{location}</Text>
-            </View>
-            <View style = { styles.dividerLine } />
-            <View style = {{ flexDirection: 'row', marginBottom: 12 }}>
-                <Image 
-                    source = { profileImage }
-                    style = { styles.profileImage }
+        {loading ? (
+            <ActivityIndicator size = "large" style ={{ marginTop: 250}}/>
+        ) : (
+            <>
+                <Stack.Screen options={{    
+                    headerTitle: "ATRÁS", 
+                    headerRight: () => (
+                        <View style = {{ width: 200, backgroundColor: colorTypePost, alignItems: 'center'}}>
+                            <Text style = {{ fontFamily: 'Inter-Black', fontSize: 16, color: '#fff' }}>{typePost}</Text>
+                        </View>
+                    ) }} 
                 />
-                <View>
-                    <Text style = {{ fontFamily: 'Inter-Black', fontSize: 17, marginTop: 5 }}>
-                        {author}
-                    </Text>
-                    <Text style = {{ fontFamily: 'Inter-Regular', fontSize: 15, color: 'gray' }}>
-                        @{username}
-                    </Text>
-                </View>
-            </View>
-            <View style = { styles.contactContainer }>
-                <View style = {{ flexDirection: 'row'}}>
-                    <Image source = { icons.email } style = { styles.contactIcons }/>
-                    <Text>{email}</Text>
-                </View>
-                <View style = {{ flexDirection: 'row'}}>
-                    <Image source = { icons.phone } style = { styles.contactIcons }/>
-                    <Text>{phone}</Text>
-                </View>
-            </View>
-            <View style = { styles.footerButtons }>
-                <TouchableOpacity style = { [styles.footerButton, { borderRightColor: 'black', borderRightWidth: 0.5 }] }>
-                    <Image source = { icons.compartir } style = { styles.contactIcons }/>
-                    <Text>Compartir Post</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = { [styles.footerButton, { borderLeftColor: 'black', borderLeftWidth: 0.5 }] }>
-                    <Image source = { icons.prohibido } style = { styles.contactIcons }/>
-                    <Text>Reportar Post</Text>
-                </TouchableOpacity>
-            </View>
-            {selectedImage && (
-                <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />
-            )}
-        </ScrollView>
+                <ScrollView style = {{ flex: 1, marginHorizontal: 10 }}>
+                    <ScrollView horizontal>
+                        {imagesPost.map((image, index) => (
+                            <TouchableOpacity key = { index } onPress = {() => pressedImageController(image)}>
+                                <Image key = { index } source = { image } style = { styles.imagePost } />
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                    <Text style = { styles.petName }>{name}</Text>
+                    <Text style = { styles.longText }>{postDescription}</Text>
+                    <View style = { styles.dividerLine } />
+                    <View>
+                        <View style = { styles.containerProperty1 }>
+                            <View style = { styles.containerTitleProperty }><Text style = { styles.titleProperty }>ESPECIE:</Text><Text>{specie}</Text></View>
+                            <View style = { styles.containerTitleProperty }><Text style = { styles.titleProperty }>GÉNERO:</Text><Text>{genre}</Text></View>
+                        </View>
+                        <View  style = { styles.containerProperty1 }>
+                            <View style = { styles.containerTitleProperty }><Text style = { styles.titleProperty }>RAZA:</Text><Text>{race}</Text></View>
+                            <View style = {{ borderWidth: 1, borderColor: 'black', borderRadius: 15, paddingHorizontal: 35, paddingVertical: 10 }}><Text>{dateAdd}</Text></View>
+                        </View>
+                    </View>
+                    <View style = {{ marginBottom: 10 }}>
+                        <Text style = { styles.titleProperty }>DESCRIPCIÓN:</Text>
+                        <Text style = { styles.longText }>{petDescription}</Text>
+                    </View>
+                    <View style = {{ marginBottom: 10 }}>
+                        <Text style = { styles.titleProperty }>UBICACIÓN:</Text>
+                        <Text style = { styles.longText }>{location}</Text>
+                    </View>
+                    <View style = { styles.dividerLine } />
+                    <View style = {{ flexDirection: 'row', marginBottom: 12 }}>
+                        <Image 
+                            source = { profileImage }
+                            style = { styles.profileImage }
+                        />
+                        <View>
+                            <Text style = {{ fontFamily: 'Inter-Black', fontSize: 17, marginTop: 5 }}>
+                                {author}
+                            </Text>
+                            <Text style = {{ fontFamily: 'Inter-Regular', fontSize: 15, color: 'gray' }}>
+                                @{username}
+                            </Text>
+                        </View>
+                    </View>
+                    <View style = { styles.contactContainer }>
+                        <View style = {{ flexDirection: 'row'}}>
+                            <Image source = { icons.email } style = { styles.contactIcons }/>
+                            <Text>{email}</Text>
+                        </View>
+                        <View style = {{ flexDirection: 'row'}}>
+                            <Image source = { icons.phone } style = { styles.contactIcons }/>
+                            <Text>{phone}</Text>
+                        </View>
+                    </View>
+                    <View style = { styles.footerButtons }>
+                        <TouchableOpacity style = { [styles.footerButton, { borderRightColor: 'black', borderRightWidth: 0.5 }] }>
+                            <Image source = { icons.compartir } style = { styles.contactIcons }/>
+                            <Text>Compartir Post</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style = { [styles.footerButton, { borderLeftColor: 'black', borderLeftWidth: 0.5 }] }>
+                            <Image source = { icons.prohibido } style = { styles.contactIcons }/>
+                            <Text>Reportar Post</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {selectedImage && (
+                        <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />
+                    )}
+                </ScrollView>
+            </>
+        )}
     </SafeAreaView>
   )
 }

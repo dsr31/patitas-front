@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#C1AB73',
     },
     searchForms: {
-        marginBottom: 30,
+        marginBottom: 5,
     },
     searchFormsDouble: {
         flexDirection: 'row',

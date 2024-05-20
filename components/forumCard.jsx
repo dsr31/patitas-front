@@ -5,7 +5,7 @@ import styles from '../styles/forumCard'
 import icons from '../constants/icons'
 import { router } from 'expo-router'
 
-const ForumCard = ({ content:{ id_forum, title, images, content, name, username } }) => {
+const ForumCard = ({ content:{ id_forum, title, forum_image_1, content, name, username } }) => {
   let colorTypeforum = '#8D35E6';
   
   const goToTheForum = () => {(
@@ -19,14 +19,14 @@ const ForumCard = ({ content:{ id_forum, title, images, content, name, username 
       </View>
       <View style = { styles.forumContent }>
             <View style = { [styles.forumShadow, styles.forumContainerImage] }>
-                {images !== '' && (
+                {forum_image_1 !== '' && (
                     <Image
                         source = { images }
                         style = { styles.forumImage }
                     />
                 )}
             </View>
-            {images !== '' ? (
+            {forum_image_1 !== '' ? (
                 <View style = { [styles.forumInfo, styles.forumShadow] }>
                     <Text numberOfLines={5} style = { styles.forumDescription }>{content}</Text>
                     <View style = { styles.forumUser }>

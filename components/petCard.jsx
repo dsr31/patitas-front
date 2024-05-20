@@ -4,16 +4,28 @@ import { Image } from 'react-native'
 import styles from '../styles/petCard'
 import icons from '../constants/icons'
 
-const PetCard = ({ content:{ id, name, photo, description, type, location } }) => {
+const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_description, chip_identifier, pet_genre, race_name, specie_name } }) => {
 
+  let genre = 'DESCONOCIDO';
+
+  if(pet_genre == 1){
+    genre = 'MACHO';
+  }
+  else if(pet_genre == 2){
+    genre = 'HEMBRA';
+  } 
+  let chip = 'Sin chip / identificación';
+  if(chip_identifier != ''){
+    chip = chip_identifier;
+  }
   return (
     <View style = { [styles.petShadow, styles.petCard]}>
         <View style = { styles.upperSection }>
             <View style = {{width: '30%'}}>
-                <Image
+                {/*<Image
                     source = { photo }
                     style = { styles.createImage }
-                />
+  />*/}
             </View>
             <View style = {{width: '70%'}}>
                 <TouchableOpacity style = { [styles.managePet, {backgroundColor: '#4082E4'}] }>
@@ -28,8 +40,8 @@ const PetCard = ({ content:{ id, name, photo, description, type, location } }) =
         </View>
         <View style = { styles.bottomSection }>
             <View style = { styles.idSection }>
-                <Text numberOfLines={1} style = { styles.idSectionName }>{name}</Text>
-                <Text style = { styles.idSectionChip }>Sin chip /identificación</Text>
+                <Text numberOfLines={1} style = { styles.idSectionName }>{pet_name}</Text>
+                <Text style = { styles.idSectionChip }>{chip}</Text>
             </View>
             <View style = { styles.infoSection }>
                 <View style = { styles.infoSectionLeft }>
@@ -38,7 +50,7 @@ const PetCard = ({ content:{ id, name, photo, description, type, location } }) =
                             ESPECIE:
                         </Text>
                         <Text style = { styles.infoSectionDisplayData }>
-                            Perro
+                            {specie_name}
                         </Text>
                     </View>
                     <View style = { styles.infoSectionDisplay }>
@@ -46,7 +58,7 @@ const PetCard = ({ content:{ id, name, photo, description, type, location } }) =
                             RAZA:
                         </Text>
                         <Text style = { styles.infoSectionDisplayData }>
-                            Cocker Spaniel
+                            {race_name}
                         </Text>
                     </View>
                 </View>
@@ -55,12 +67,12 @@ const PetCard = ({ content:{ id, name, photo, description, type, location } }) =
                         GÉNERO:
                     </Text>
                     <Text style = { styles.infoSectionDisplayData }>
-                        HEMBRA
+                        {genre}
                     </Text>
                 </View>
             </View>
             <Text numberOfLines = {3} style = { [styles.infoSectionDisplayData, styles.infoSectionDescription] }>
-                Descripcionn Descripcionn Descripcionn Descripcionn Descripcionn Descripcionn v vDescripcionnDescripcionnDescripcionn DescripcionnDescripcionn 
+                {pet_description}
             </Text>
         </View>
     </View>
