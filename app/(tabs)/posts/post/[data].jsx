@@ -94,6 +94,13 @@ const DataPost = ({params}) => {
     )
   }, [])
 
+  const enviarMail = () => {
+    Linking.openURL(`mailto:${email}`);
+  }
+  const llamar = () => {
+    Linking.openURL(`tel:${phone}`);
+  }
+
   let colorTypePost = '#E44040';
   let imagesPost = [images.img_default_1];
   if(typePost == 'ENCONTRADO'){
@@ -182,11 +189,15 @@ const DataPost = ({params}) => {
                     <View style = { styles.contactContainer }>
                         <View style = {{ flexDirection: 'row'}}>
                             <Image source = { icons.email } style = { styles.contactIcons }/>
-                            <Text>{email}</Text>
+                            <TouchableOpacity onPress = { enviarMail }>
+                                <Text>{email}</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style = {{ flexDirection: 'row'}}>
                             <Image source = { icons.phone } style = { styles.contactIcons }/>
-                            <Text>{phone}</Text>
+                            <TouchableOpacity onPress = { llamar }>
+                                <Text>{phone}</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style = { styles.footerButtons }>

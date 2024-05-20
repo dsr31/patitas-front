@@ -1,4 +1,4 @@
-import { TouchableOpacity, Image, ScrollView, StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Image, Text, View, Linking, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { React, useState, useEffect } from 'react'
 import 'react-native-reanimated';
@@ -46,7 +46,13 @@ const Profile = () => {
     )
   }, [])
 
-
+  const enviarMail = () => {
+    Linking.openURL(`mailto:${email}`);
+  }
+  const llamar = () => {
+    Linking.openURL(`tel:${phone}`);
+  }
+  
   return (
     <>
       <SafeAreaView style = { styles.container }>
@@ -81,7 +87,7 @@ const Profile = () => {
                 <Text numberOfLines={6}>{description}</Text>
               </View>
               <View style = { styles.contactButtonsContainer }>
-                <TouchableOpacity style = { [styles.contactButton, styles.contactButtonBordersLeft] }>
+                <TouchableOpacity style = { [styles.contactButton, styles.contactButtonBordersLeft] } onPress = { enviarMail }>
                   <Image
                     source = { icons.email }
                     style = { styles.contactInfoIcon }
@@ -90,7 +96,7 @@ const Profile = () => {
                     {email}
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = { [styles.contactButton, styles.contactButtonBordersRight] }>
+                <TouchableOpacity style = { [styles.contactButton, styles.contactButtonBordersRight] } onPress = { llamar }>
                   <Image
                     source = { icons.phone }
                     style = { styles.contactInfoIcon }

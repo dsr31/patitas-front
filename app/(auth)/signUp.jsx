@@ -8,6 +8,8 @@ import styles from '../../styles/auth';
 import icons from '../../constants/icons.js';
 
 const SignUp = () => {
+  const [userError, setUserError] = useState();
+
   const [signUp, setSignUp] = useState({
     name:'',
     user:'',
@@ -16,6 +18,48 @@ const SignUp = () => {
     password:''
   })
 
+  let url_request = "http://192.168.1.66:4000/api/users";
+
+  const comprobarDisponibilidadUsuario = () => {
+    
+    fetch(`http://192.168.1.66:4000/api/users/comprobarDisponibilidadUsuario?email=${signUp.email}&username=${signUp.user}`).then(
+      res => res.json()
+    ).then(
+      (resultado) => {
+        if(!resultado.body[0]){
+          regitrarUsuario();
+          setUserError("");
+        }
+        else{
+          setUserError("El nombre de usuario o email ya ha sido usado. Por favor, cambielo");
+        }
+      }, 
+      (error) => {
+        setLoading(true);
+        console.warn("Houston tenemos un problema en la pagina de foro");
+      }
+    )
+  }
+
+  const regitrarUsuario = async () => {
+    const emailAux = signUp.email.toLowerCase();
+    const usernameAux = signUp.user.toLowerCase();
+    const nameAux = signUp.name.toUpperCase();
+    const ahora = new Date();
+
+    let enviarFormulario = await fetch( url_request, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        "name" : nameAux, "description" : "", "email" : emailAux, "username" : usernameAux, "password" : signUp.password, "phone" : signUp.phone, "rating" : 0, "user_profile_image" : "", "date_add" : ahora
+      })
+    })
+    enviarFormulario = await enviarFormulario.json();
+    if(enviarFormulario){
+      router.push('/signUpAditional');
+    }
+  }
+ 
   return (
     <SafeAreaView style = { styles.main }>
       <ScrollView contentContainerStyle={ styles.scrollViewContent }>
@@ -65,8 +109,10 @@ const SignUp = () => {
               style = { styles.customtextInput }
             />
           </View>
-          <TouchableOpacity style = { styles.signInAuthContainer }>
-            <Text style = { styles.signUpAuth } onPress={()=>router.push('/signUpAditional')}>
+          {userError ? (<Text>{userError}</Text>) : (<Text></Text>)}
+          <TouchableOpacity style = { styles.signInAuthContainer }  onPress = { () => {comprobarDisponibilidadUsuario()} }>
+            <Text style = { styles.signUpAuth }
+            /*onPress={()=>router.push('/signUpAditional')}*/>
               REGISTRARSE
             </Text>
           </TouchableOpacity>
