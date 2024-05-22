@@ -1,14 +1,19 @@
 import { ActivityIndicator, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity, Linking } from 'react-native'
-import {React, useState, useEffect} from 'react'
-import { useLocalSearchParams, Stack } from 'expo-router'
+import {React, useState, useEffect, useContext} from 'react'
+import { useLocalSearchParams, Stack, router } from 'expo-router'
 import images from '../../../../constants/images';
 import styles from '../../../../styles/dataPost';
 import icons from '../../../../constants/icons';
 import ImageModal from '../../../../components/imageModal';
+import { SessionContext } from '../../../../context/sessionContext';
 
 const DataPost = ({params}) => {
   let currentPost = useLocalSearchParams();
   let id_post = currentPost.data;
+
+  // Acceder al usuario de la sesion
+  const { usernameSession } = useContext(SessionContext);
+
   /*
   const typePost = 'SE BUSCA';
   const statusPost = '';
@@ -94,6 +99,10 @@ const DataPost = ({params}) => {
     )
   }, [])
 
+  const verPerfilUsuario = () => {
+    router.push({ pathname: `./../../profiles/profile/${username}`, params: username}) 
+  }
+
   const enviarMail = () => {
     Linking.openURL(`mailto:${email}`);
   }
@@ -172,7 +181,7 @@ const DataPost = ({params}) => {
                         <Text style = { styles.longText }>{location}</Text>
                     </View>
                     <View style = { styles.dividerLine } />
-                    <View style = {{ flexDirection: 'row', marginBottom: 12 }}>
+                    <TouchableOpacity style = {{ flexDirection: 'row', marginBottom: 12 }} onPress = {() => {verPerfilUsuario()}}>
                         <Image 
                             source = { profileImage }
                             style = { styles.profileImage }
@@ -185,7 +194,7 @@ const DataPost = ({params}) => {
                                 @{username}
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                     <View style = { styles.contactContainer }>
                         <View style = {{ flexDirection: 'row'}}>
                             <Image source = { icons.email } style = { styles.contactIcons }/>
@@ -209,6 +218,11 @@ const DataPost = ({params}) => {
                             <Image source = { icons.prohibido } style = { styles.contactIcons }/>
                             <Text>Reportar Post</Text>
                         </TouchableOpacity>
+                    </View>
+                    <View>
+                    {usernameSession == username && (<TouchableOpacity style = { styles.deleteButtonPost }>
+                        <Text style = { styles.deleteButtonPostText }>BORRAR POST</Text>
+                    </TouchableOpacity>)}
                     </View>
                     {selectedImage && (
                         <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />

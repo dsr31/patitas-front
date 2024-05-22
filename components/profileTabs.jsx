@@ -48,9 +48,9 @@ useEffect(() => {
 
 
 
-const ProfileTabs = ({idUser, ratingUser}) => {
+const ProfileTabs = ({idUser, ratingUser, styleFix, deletable}) => {
   const [profileTab, setProfileTab] = useState('tabUno'); 
-  const [userProfile, setuserProfile] = useState(1); 
+  const [userProfile, setuserProfile] = useState(idUser); 
 
   const controladorTab = (tab) =>{
     setProfileTab(tab);
@@ -63,7 +63,7 @@ const ProfileTabs = ({idUser, ratingUser}) => {
   }
 
   return (
-    <View style = {{marginBottom: 370}}>
+    <View style = {{marginBottom: styleFix}}>
         <View style = { styles.tabsBarContainer }>
             <TouchableOpacity onPress = {() => controladorTab('tabUno')} style = { [styles.tabBar, profileTab === 'tabUno' && styles.activeTab] }>
                 <Image 
@@ -88,7 +88,7 @@ const ProfileTabs = ({idUser, ratingUser}) => {
         
       {profileTab === 'tabUno' && (
         <View>
-          <MyPetsTab iduserProfile = {userProfile}/>
+          <MyPetsTab iduserProfile = {userProfile} deletable = {deletable} />
         </View>
       )}
       {profileTab === 'tabDos' && (

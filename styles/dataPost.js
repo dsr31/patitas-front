@@ -65,6 +65,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         height: '100%',
         flex: 1,
+    },
+    deleteButtonPost: { 
+        backgroundColor: '#DE5858', 
+        marginHorizontal: 20, 
+        height: 50, 
+        marginBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    deleteButtonPostText:{
+        fontFamily: 'Inter-Black',
+        fontSize: 20,
     }
 });
 

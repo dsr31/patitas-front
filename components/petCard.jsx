@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View, ViewBase } from 'react-native'
-import React from 'react'
+import {React, useState } from 'react'
 import { Image } from 'react-native'
 import styles from '../styles/petCard'
 import icons from '../constants/icons'
+import PetPostsModal from './petPostsModal'
 
-const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_description, chip_identifier, pet_genre, race_name, specie_name } }) => {
+const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_description, chip_identifier, pet_genre, race_name, specie_name }, deletable }) => {
 
   let genre = 'DESCONOCIDO';
 
@@ -18,8 +19,18 @@ const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_descriptio
   if(chip_identifier != ''){
     chip = chip_identifier;
   }
+
+  const [modalVisible, setModalVisible] = useState (false);
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style = { [styles.petShadow, styles.petCard]}>
+
+        {modalVisible && <PetPostsModal id_pet={id_pet} visible = { modalVisible } closeModal = { closeModal }/>}
+
         <View style = { styles.upperSection }>
             <View style = {{width: '30%'}}>
                 {/*<Image
@@ -28,14 +39,14 @@ const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_descriptio
   />*/}
             </View>
             <View style = {{width: '70%'}}>
-                <TouchableOpacity style = { [styles.managePet, {backgroundColor: '#4082E4'}] }>
+                <TouchableOpacity style = { [styles.managePet, {backgroundColor: '#4082E4'}] }  onPress = {() => setModalVisible(true)} >
                     <Text style = { [styles.manageText, {width: '80%'}]}>VER POSTS</Text>
                     <Text style = { [styles.manageText, {width: '20%'}]}>{'>'}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = { [styles.managePet, {backgroundColor: '#DE5858'}] }>
+                {deletable && (<TouchableOpacity style = { [styles.managePet, {backgroundColor: '#DE5858'}] }>
                     <Text style = { [styles.manageText, {width: '80%'}]}>BORRAR</Text>
                     <Text style = { [styles.manageText, {width: '20%'}]}>×</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
             </View>
         </View>
         <View style = { styles.bottomSection }>

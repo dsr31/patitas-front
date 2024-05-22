@@ -1,4 +1,4 @@
-import { FlatList, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity } from 'react-native'
+import { FlatList, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import {React, useState, useEffect } from 'react'
 import { useLocalSearchParams, Stack } from 'expo-router'
 import images from '../../../../constants/images';
@@ -10,7 +10,6 @@ import ImageModal from '../../../../components/imageModal';
 
 const ForumPost = ({params}) => {
   let currentForum = useLocalSearchParams();
-  console.log(currentForum);
   let id_forum = currentForum.data;
 
   const [profileImage, setprofileImage] = useState();
@@ -19,7 +18,7 @@ const ForumPost = ({params}) => {
   const [title, settitle] = useState();
   const [content, setcontent] = useState();
   const [imagesPost, setimagesPost] = useState();
-  const [replies, setreplies] = useState();// este vacio
+  const [replies, setreplies] = useState();
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -36,11 +35,26 @@ const ForumPost = ({params}) => {
         setimagesPost(resultado.body[0].imagesPost);
         //setreplies(resultado.body[0].replies);
 
-        console.log(resultado.body[0])
+        //console.log(resultado.body[0])
       }, 
       (error) => {
         setLoading(true);
         console.warn("Houston tenemos un problema en la pagina de foro");
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    fetch(`http://192.168.1.66:4000/api/forums/${id_forum}/replies`).then(
+      res => res.json()
+    ).then(
+      (resultado) => {
+        setreplies(resultado.body)
+        //console.log(resultado.body)
+      }, 
+      (error) => {
+        setLoading(true);
+        console.warn("Houston tenemos un problema obteniendo las respuestas del foro");
       }
     )
   }, [])
@@ -84,7 +98,7 @@ const ForumPost = ({params}) => {
                   <Text style = {{ fontFamily: 'Inter-Black', fontSize: 16, color: '#fff' }}>FORO</Text>
               </View>
           ) }} 
-      />
+        />
       <ScrollView style = {{ flex: 1, marginHorizontal: 10 }}>
         <View style = {{ flexDirection: 'row', marginTop: 10 }}>
           <Image 
@@ -112,15 +126,15 @@ const ForumPost = ({params}) => {
         <View style = { styles.line } />
         <ActionButtons />
         <View style = { styles.line } />
-        {/*replies.length > 0 ? (
+        {replies && replies != '' ? (
           replies.map((reply) => (
-            <ReplyCard  key={reply.id} reply={reply} actionButtons={<ActionButtons />} />
+            <ReplyCard  key={reply.id_forum} reply={reply} actionButtons={<ActionButtons />} />
           ))
-        ) : (*/}
+        ) : (
           <View style = { styles.noRepliesContainer }>
             <Text style = { styles.usernameStyle }>Sin respuestas.</Text>
           </View>
-        {/*)}*/}
+        )}
         {selectedImage && (
           <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />
         )}

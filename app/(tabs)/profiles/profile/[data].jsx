@@ -1,18 +1,24 @@
 import { TouchableOpacity, Image, Text, View, Linking, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useContext } from 'react'
 import 'react-native-reanimated';
-import { router,Link,Redirect } from 'expo-router';
-import images from '../../constants/images';
-import styles from '../../styles/tabs';
-import icons from '../../constants/icons';
-import ProfileTabs from '../../components/profileTabs';
+import { router,useLocalSearchParams } from 'expo-router';
+import images from '../../../../constants/images'
+import styles from '../../../../styles/tabs';
+import icons from '../../../../constants/icons';
+import ProfileTabs from '../../../../components/profileTabs';
+import { SessionContext } from '../../../../context/sessionContext';
+import { FlipInEasyX } from 'react-native-reanimated';
 
-const Profile = () => {
-  let iduserProfile = 1;
+const DataProfile = ({params}) => {
+  let currentProfile = useLocalSearchParams();
+  let profile_selected = currentProfile.data;
+  //let iduserProfile = 1;
 
   const [loading, setLoading] = useState(true);
 
+  // Acceder al usuario de la sesion
+  const { usernameSession } = useContext(SessionContext);
 
   const [id_user, setid_user] = useState();
   const [name, setname] = useState();
@@ -24,7 +30,10 @@ const Profile = () => {
   const [user_profile_image, setuser_profile_image] = useState();
 
   useEffect(() => {
-    fetch(`http://192.168.1.66:4000/api/users/${iduserProfile}`).then(
+    if(profile_selected == usernameSession){
+      router.push('/../(tabs)/profiles');
+    }
+    fetch(`http://192.168.1.66:4000/api/users/${profile_selected}`).then(
       res => res.json()
     ).then(
       (resultado) => {
@@ -60,17 +69,6 @@ const Profile = () => {
           <ActivityIndicator size = "large"/>
         ) : (
           <>
-            <View style = { styles.header }>
-              <Image
-                source = { images.logov3 }
-                style  = { styles.logoHeader }
-              />        
-            <View style={styles.spacer} />
-              <Image 
-                source = { icons.bell }
-                style  = { styles.iconHeader } 
-              />
-            </View>
             <View style = { styles.headerFixerProfile } />        
             <View style = {{ height: '100%', backgroundColor: '#E2D8BE'}}>
               <View style = { styles.userIDs }>
@@ -110,7 +108,7 @@ const Profile = () => {
                 <View style = { styles.actionButtonsProfileContainer }>
                   <TouchableOpacity style = { styles.actionButtonProfile }>
                     <Text style = { styles.actionButtonText }>
-                      EDITAR PERFIL
+                      VALORAR PERFIL
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -122,7 +120,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <ProfileTabs idUser = { id_user } ratingUser = { rating }/>
+              <ProfileTabs idUser = { id_user } ratingUser = { rating } styleFix = { 290 } deletable = {false} />
             </View>
           </>
         )}
@@ -131,4 +129,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default DataProfile

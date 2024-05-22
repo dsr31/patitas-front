@@ -1,7 +1,7 @@
-import { React, View, Text } from 'react'
+import React from 'react'
 import { Stack } from 'expo-router'
 
-const ForumLayout = () => {
+const ProfileLayout = () => {
   return (
     <Stack>
         <Stack.Screen
@@ -9,10 +9,11 @@ const ForumLayout = () => {
             options = {{ headerShown: false }}
         />
         <Stack.Screen
-            name = 'forum/[data]'
+            name = 'profile/[data]'
+            options = {{ headerTitle: "ATRÁS" }}
         />
     </Stack>
   )
 }
 
-export default ForumLayout
+export default ProfileLayout

@@ -4,7 +4,7 @@ import images from '../constants/images';
 import PetCard from './petCard';
 import { useState, useEffect } from 'react';
 
-const MyPetsTab = ({iduserProfile}) => {
+const MyPetsTab = ({iduserProfile, deletable}) => {
     
     const [data, setData] = useState();
 
@@ -34,7 +34,7 @@ const MyPetsTab = ({iduserProfile}) => {
             data = {data}
             keyExtractor = {(item) => item.id_pet}
             renderItem = {({item}) => (
-                <PetCard content = {item}/>
+                <PetCard content = {item} deletable = {deletable}/>
             )}
         />
     </View>

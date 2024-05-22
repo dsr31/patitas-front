@@ -17,7 +17,7 @@ const SignUp = () => {
     phone:'',
     password:''
   })
-
+  
   let url_request = "http://192.168.1.66:4000/api/users";
 
   const comprobarDisponibilidadUsuario = () => {

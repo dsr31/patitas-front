@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
     userRatingText: {
         fontFamily: 'Inter-Regular',
         fontSize: 13,
+    },
+    withoutReviews: {
+        fontFamily: 'Inter-Regular',
+        textAlign: 'center',
+        marginTop: 20,
     }
 });
 
