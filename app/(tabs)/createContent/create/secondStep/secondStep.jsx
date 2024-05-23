@@ -76,7 +76,7 @@ const SecondStep = ({params}) => {
     </Modal>
   );
   const crearPublicacion = async () => {
-    let url_request = "http://192.168.166.18:4000/api/posts";
+    let url_request = "http://192.168.231.18:4000/api/posts";
     let enviarFormulario = await fetch( url_request, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
@@ -86,8 +86,10 @@ const SecondStep = ({params}) => {
     })
     enviarFormulario = await enviarFormulario.json();
     if(enviarFormulario){
-      console.log(enviarFormulario)
+      //console.log(enviarFormulario)
       router.push('../../../profiles');
+    }
+    else{
     }
   }
   const aux = async (photoSelected) => {

@@ -20,11 +20,11 @@ const SignUp = () => {
     password:''
   })
   
-  let url_request = "http://192.168.166.18:4000/api/users";
+  let url_request = "http://192.168.231.18:4000/api/users";
 
   const comprobarDisponibilidadUsuario = () => {
     
-    fetch(`http://192.168.166.18:4000/api/users/comprobarDisponibilidadUsuario?email=${signUp.email}&username=${signUp.user}`).then(
+    fetch(`http://192.168.231.18:4000/api/users/comprobarDisponibilidadUsuario?email=${signUp.email}&username=${signUp.user}`).then(
       res => res.json()
     ).then(
       (resultado) => {

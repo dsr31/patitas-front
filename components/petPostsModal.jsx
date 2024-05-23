@@ -13,7 +13,7 @@ const PetPostsModal = ({id_pet, visible, closeModal}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      fetch(`http://192.168.166.18:4000/api/pets/${id_pet}/posts`).then(
+      fetch(`http://192.168.231.18:4000/api/pets/${id_pet}/posts`).then(
         res => res.json()
       ).then(
         (resultado) => {

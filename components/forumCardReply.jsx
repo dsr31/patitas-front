@@ -18,7 +18,7 @@ const ForumCardReply = ({ content:{ id_forum, title, content, forum_image_1, id_
     if(id_reply != 0){
         destino = id_reply;
     }
-    console.log(destino);
+    //console.log(destino);
     if(usernameSession == username){
         router.push({ pathname: `./../forums/forum/${destino}`, params: destino}) 
     }

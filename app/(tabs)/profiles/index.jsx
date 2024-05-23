@@ -27,7 +27,7 @@ const Profile = () => {
   const [user_profile_image, setuser_profile_image] = useState();
 
   useEffect(() => {
-    fetch(`http://192.168.166.18:4000/api/users/${usernameSession}`).then(
+    fetch(`http://192.168.231.18:4000/api/users/${usernameSession}`).then(
       res => res.json()
     ).then(
       (resultado) => {

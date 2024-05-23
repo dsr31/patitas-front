@@ -30,7 +30,7 @@ const CreatePet = () => {
  //Conexion base de datos
  const [data, setData] = useState();
  useEffect(() => {
-   fetch(`http://192.168.166.18:4000/api/users/${usernameSession}`).then(
+   fetch(`http://192.168.231.18:4000/api/users/${usernameSession}`).then(
      res => res.json()
    ).then(
      (resultado) => {
@@ -45,7 +45,7 @@ const CreatePet = () => {
  }, [])
 
  const crearMascota = async () => {
-    let url_request = "http://192.168.166.18:4000/api/pets";
+    let url_request = "http://192.168.231.18:4000/api/pets";
     let enviarFormulario = await fetch( url_request, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
@@ -55,7 +55,7 @@ const CreatePet = () => {
     })
     enviarFormulario = await enviarFormulario.json();
     if(enviarFormulario){
-        console.log(enviarFormulario)
+        //console.log(enviarFormulario)
       router.push('../../profiles');
     }
   }

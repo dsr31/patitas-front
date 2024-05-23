@@ -33,7 +33,7 @@ const DataProfile = ({params}) => {
     if(profile_selected == usernameSession){
       router.push('/../(tabs)/profiles');
     }
-    fetch(`http://192.168.166.18:4000/api/users/${profile_selected}`).then(
+    fetch(`http://192.168.231.18:4000/api/users/${profile_selected}`).then(
       res => res.json()
     ).then(
       (resultado) => {

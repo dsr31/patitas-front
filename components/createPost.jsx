@@ -18,7 +18,7 @@ const CreatePost = ({params}) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://192.168.166.18:4000/api/users/${usernameSession}/petsByUserName`).then(
+    fetch(`http://192.168.231.18:4000/api/users/${usernameSession}/petsByUserName`).then(
       res => res.json()
     ).then(
       (resultado) => {

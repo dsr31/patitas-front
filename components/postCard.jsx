@@ -6,13 +6,22 @@ import icons from '../constants/icons'
 import { router } from 'expo-router'
 import images from '../constants/images'
 
-const PostCard = ({ content:{ id_post, post_type, pet_name, post_image_1, content, address } }) => {
+const PostCard = ({ content:{ id_post, post_type, status, pet_name, post_image_1, content, address } }) => {
   
   const photo_estatica = images.img_default_1;
 
-  let post_name = 'SE BUSCA';
-  let colorTypePost = '#DE5858';
+  
+  let post_name = 'RESUELTO';
+  let colorTypePost = '#62D458';
 
+  if(status == 1){
+    post_type = 5;
+  }
+
+  if(post_type == 1){
+    post_name = 'SE BUSCA';
+    colorTypePost = '#DE5858';
+  }
   if(post_type == 2){
     post_name = 'ENCONTRADO';
     colorTypePost = '#DBA10C';

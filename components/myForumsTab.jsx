@@ -11,7 +11,7 @@ const MyForumsTab = ({iduserProfile}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      fetch(`http://192.168.166.18:4000/api/users/${iduserProfile}/forums`).then(
+      fetch(`http://192.168.231.18:4000/api/users/${iduserProfile}/forums`).then(
         res => res.json()
       ).then(
         (resultado) => {

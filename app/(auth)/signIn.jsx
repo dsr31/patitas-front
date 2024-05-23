@@ -20,7 +20,7 @@ const SignIn = () => {
   const { createSession } = useContext(SessionContext);
 
   const iniciarSesion = () => {
-    fetch(`http://192.168.166.18:4000/api/users/comprobarInicioSesion?username=${signIn.username}`).then(
+    fetch(`http://192.168.231.18:4000/api/users/comprobarInicioSesion?username=${signIn.username}`).then(
       res => res.json()
     ).then(
       (resultado) => {

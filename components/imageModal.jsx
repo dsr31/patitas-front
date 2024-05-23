@@ -13,7 +13,7 @@ const ImageModal = ({ image, visible, closeImageModal }) => {
                 <TouchableOpacity style = { styles.modalCloseButton } onPress = { closeImageModal }>
                     <Text style = { styles.closeText }>CERRAR</Text>
                 </TouchableOpacity>
-                <Image source = { image } style={{ width: screenWidth, height: imageHeight }}  />
+                <Image source = { {uri:image} } style={{ width: screenWidth, height: imageHeight }}  />
             </View>
         </Modal>
     )
