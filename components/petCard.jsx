@@ -4,6 +4,7 @@ import { Image } from 'react-native'
 import styles from '../styles/petCard'
 import icons from '../constants/icons'
 import PetPostsModal from './petPostsModal'
+import images from '../constants/images'
 
 const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_description, chip_identifier, pet_genre, race_name, specie_name }, deletable }) => {
 
@@ -33,10 +34,10 @@ const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_descriptio
 
         <View style = { styles.upperSection }>
             <View style = {{width: '30%'}}>
-                {/*<Image
-                    source = { photo }
+                <Image
+                    source = { pet_profile_image != '' ? {uri:pet_profile_image} : images.img_default_0 }
                     style = { styles.createImage }
-  />*/}
+                />
             </View>
             <View style = {{width: '70%'}}>
                 <TouchableOpacity style = { [styles.managePet, {backgroundColor: '#4082E4'}] }  onPress = {() => setModalVisible(true)} >

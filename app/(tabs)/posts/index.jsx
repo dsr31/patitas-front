@@ -15,7 +15,7 @@ const Posts = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch('http://192.168.1.66:4000/api/posts').then(
+    fetch('http://192.168.166.18:4000/api/posts').then(
       res => res.json()
     ).then(
       (resultado) => {

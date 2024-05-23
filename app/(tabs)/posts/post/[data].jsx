@@ -51,10 +51,11 @@ const DataPost = ({params}) => {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch(`http://192.168.1.66:4000/api/posts/${id_post}`).then(
+    fetch(`http://192.168.166.18:4000/api/posts/${id_post}`).then(
       res => res.json()
     ).then(
       (resultado) => {
+        console.log(resultado)
         setLoading(false);
         if(resultado.body[0].post_type == 1){
             settypePost('SE BUSCA');
@@ -93,6 +94,7 @@ const DataPost = ({params}) => {
         setphone(resultado.body[0].phone);
       }, 
       (error) => {
+        console.log(error)
         setLoading(true);
         console.warn("Houston tenemos un problema");
       }

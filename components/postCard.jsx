@@ -6,7 +6,7 @@ import icons from '../constants/icons'
 import { router } from 'expo-router'
 import images from '../constants/images'
 
-const PostCard = ({ content:{ id_post, post_type, pet_name, photo, content, address } }) => {
+const PostCard = ({ content:{ id_post, post_type, pet_name, post_image_1, content, address } }) => {
   
   const photo_estatica = images.img_default_1;
 
@@ -38,7 +38,7 @@ const PostCard = ({ content:{ id_post, post_type, pet_name, photo, content, addr
       <View style = { styles.postContent }>
             <View style = { [styles.postShadow, styles.postContainerImage] }>
                 <Image
-                    source = { photo_estatica }
+                    source = { post_image_1 != '' ? {uri:post_image_1} : photo_estatica  }
                     style = { styles.postImage }
                 />
             </View>

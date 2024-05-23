@@ -21,7 +21,7 @@ const [race_name, setrace_name] = useState();
 const [specie_name, setspecie_name] = useState();
 
 useEffect(() => {
-  fetch(`http://192.168.1.66:4000/api/users/1/pets`).then(
+  fetch(`http://192.168.166.18:4000/api/users/1/pets`).then(
     res => res.json()
   ).then(
     (resultado) => {

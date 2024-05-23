@@ -1,22 +1,26 @@
-import { FlatList, View } from 'react-native'
+import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import React from 'react'
 import images from '../constants/images';
 import ForumCardReply from './forumCardReply';
+import styles from '../styles/reviewCard'
 import { useState, useEffect } from 'react';
 
 const MyForumsTab = ({iduserProfile}) => {
     
     const [data, setData] = useState();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      fetch(`http://192.168.1.66:4000/api/users/${iduserProfile}/forums`).then(
+      fetch(`http://192.168.166.18:4000/api/users/${iduserProfile}/forums`).then(
         res => res.json()
       ).then(
         (resultado) => {
+          setLoading(false);
           setData(resultado.body);
           //console.log(resultado.body)
         }, 
         (error) => {
+          setLoading(true);
           console.warn("Houston tenemos un problema en la tab de mis foros");
         }
       )
@@ -24,6 +28,7 @@ const MyForumsTab = ({iduserProfile}) => {
 
   return (
     <View style = {{ height: '100%', backgroundColor: '#D5C59B', paddingTop: 10}}>
+      {data && data != '' && loading == false ? (
         <FlatList
             /*data = {[
             { id: 1, title: 'Una preguntita aaaaaaaaaaaaaaa', photo: '', text: 'pues mira resolviendo tu duda, en este caso la respuesta seria aproximadamente asi de larga para poder comprobar la maquetacionpues mira resolviendo tu duda, en este caso la respuesta seria aproximadamente asi de larga para poder comprobar la maquetacionpues mira resolviendo tu duda, en este caso la respuesta seria aproximadamente asi de larga para poder comprobar la maquetacionpues mira resolviendo tu duda, en este caso la respuesta seria aproximadamente asi de larga para poder comprobar la maquetacion', id_reply: 10, date_reply: '', author: 'Pepe', username: 'erpepe' },
@@ -37,6 +42,11 @@ const MyForumsTab = ({iduserProfile}) => {
                 <ForumCardReply content = {item}/>
             )}
         />
+      ) : loading ? (
+        <ActivityIndicator size = "large" style ={{ marginTop: 250}}/>
+      ) : (
+        <Text style = { styles.withoutReviews }>No tienes foros por el momento.</Text>
+      )}
     </View>
   )
 }

@@ -6,7 +6,7 @@ export const SessionContext = createContext();
 
 export const SessionProvider = ({children}) => {
 
-  const [userError, setUserError] = useState('elefante');
+  const [userError, setUserError] = useState();
   const [usernameSession, setusernameSession] = useState();
 
   const createSession = (param) => {

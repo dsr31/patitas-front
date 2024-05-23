@@ -2,12 +2,14 @@ import { ScrollView, Image, StyleSheet, Text, View, TextInput, TouchableOpacity 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react';
 import { router,Link } from 'expo-router';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import images from '../../constants/images';
 import styles from '../../styles/auth';
 import icons from '../../constants/icons.js';
+import { SessionContext } from '../../context/sessionContext.jsx';
 
 const SignUp = () => {
+  const { createSession } = useContext(SessionContext);
   const [userError, setUserError] = useState();
 
   const [signUp, setSignUp] = useState({
@@ -18,11 +20,11 @@ const SignUp = () => {
     password:''
   })
   
-  let url_request = "http://192.168.1.66:4000/api/users";
+  let url_request = "http://192.168.166.18:4000/api/users";
 
   const comprobarDisponibilidadUsuario = () => {
     
-    fetch(`http://192.168.1.66:4000/api/users/comprobarDisponibilidadUsuario?email=${signUp.email}&username=${signUp.user}`).then(
+    fetch(`http://192.168.166.18:4000/api/users/comprobarDisponibilidadUsuario?email=${signUp.email}&username=${signUp.user}`).then(
       res => res.json()
     ).then(
       (resultado) => {
@@ -56,6 +58,7 @@ const SignUp = () => {
     })
     enviarFormulario = await enviarFormulario.json();
     if(enviarFormulario){
+      createSession(usernameAux)
       router.push('/signUpAditional');
     }
   }
@@ -111,8 +114,7 @@ const SignUp = () => {
           </View>
           {userError ? (<Text>{userError}</Text>) : (<Text></Text>)}
           <TouchableOpacity style = { styles.signInAuthContainer }  onPress = { () => {comprobarDisponibilidadUsuario()} }>
-            <Text style = { styles.signUpAuth }
-            /*onPress={()=>router.push('/signUpAditional')}*/>
+            <Text style = { styles.signUpAuth }>
               REGISTRARSE
             </Text>
           </TouchableOpacity>

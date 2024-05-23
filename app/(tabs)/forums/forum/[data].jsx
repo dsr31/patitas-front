@@ -22,7 +22,7 @@ const ForumPost = ({params}) => {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch(`http://192.168.1.66:4000/api/forums/${id_forum}`).then(
+    fetch(`http://192.168.166.18:4000/api/forums/${id_forum}`).then(
       res => res.json()
     ).then(
       (resultado) => {
@@ -45,7 +45,7 @@ const ForumPost = ({params}) => {
   }, [])
 
   useEffect(() => {
-    fetch(`http://192.168.1.66:4000/api/forums/${id_forum}/replies`).then(
+    fetch(`http://192.168.166.18:4000/api/forums/${id_forum}/replies`).then(
       res => res.json()
     ).then(
       (resultado) => {
