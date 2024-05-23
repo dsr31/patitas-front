@@ -77,6 +77,55 @@ const styles = StyleSheet.create({
     deleteButtonPostText:{
         fontFamily: 'Inter-Black',
         fontSize: 20,
+    },
+    modalConfStyle: { 
+        flex: 1, 
+        width: '100%', 
+        height: '100%', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: 'rgba(214, 214, 214, 0.8)',
+    },
+    modalConfTitle: { 
+        backgroundColor: '#C1AB73', 
+        width: '100%', 
+        paddingHorizontal: 30, 
+        paddingVertical: 10, 
+        alignItems: 'center', 
+        borderTopRightRadius: 40, 
+        borderTopLeftRadius: 40,
+    },
+    modalConfTitleText: { 
+        fontFamily: 'Inter-Black', 
+        color: '#fff', 
+        fontSize: 15, 
+        textAlign: 'center',
+    },
+    modalConfButtons: { 
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%', 
+        //paddingHorizontal: 30, 
+        //paddingVertical: 20, 
+        alignItems: 'center', 
+        borderBottomRightRadius: 40, 
+        borderBottomLeftRadius: 40,
+    },
+    modalConfButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '50%',
+        height: '100%',
+        paddingVertical: 20, 
+    },
+    modalConfButtonText: {
+        //alignItems: 'center',
+        fontFamily: 'Inter-Bold',
+        fontSize: 16,
+        textAlign: 'center',
     }
 });
 

@@ -17,7 +17,7 @@ const ForumPost = ({params}) => {
   const [username, setusername] = useState();
   const [title, settitle] = useState();
   const [content, setcontent] = useState();
-  const [imagesPost, setimagesPost] = useState();
+  const [imagesPost, setimagesPost] = useState([]);
   const [replies, setreplies] = useState();
 
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ const ForumPost = ({params}) => {
         setusername(resultado.body[0].username);
         settitle(resultado.body[0].title);
         setcontent(resultado.body[0].content);
-        setimagesPost(resultado.body[0].imagesPost);
+        setimagesPost([resultado.body[0].forum_image_1, resultado.body[0].forum_image_2]);
         //setreplies(resultado.body[0].replies);
 
         //console.log(resultado.body[0])
@@ -117,11 +117,11 @@ const ForumPost = ({params}) => {
           {content}
         </Text>
         <ScrollView horizontal>
-            {/*imagesPost.map((image, index) => (
+            {imagesPost[0] != '' && imagesPost.map((image, index) => (
               <TouchableOpacity key = { index } onPress = {() => pressedImageController(image)}>
-                <Image key = { index } source = { image } style = { styles.imageForum } />
+                <Image key = { index } source = { image != '' && {uri:image}  } style = { styles.imageForum } />
               </TouchableOpacity>
-            ))*/}
+            ))}
         </ScrollView>
         <View style = { styles.line } />
         <ActionButtons />

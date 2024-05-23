@@ -1,8 +1,8 @@
 import { TouchableOpacity, Image, ScrollView, StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useCallback } from 'react'
 import 'react-native-reanimated';
-import { router,Link,Redirect } from 'expo-router';
+import { router,Link,Redirect,useFocusEffect } from 'expo-router';
 import images from '../../../constants/images';
 import styles from '../../../styles/tabs';
 import icons from '../../../constants/icons';
@@ -13,7 +13,8 @@ const Forums = () => {
   //Conexion base de datos
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
+
+  const fetchData = useCallback(() => {
     fetch('http://192.168.231.18:4000/api/forums').then(
       res => res.json()
     ).then(
@@ -28,6 +29,11 @@ const Forums = () => {
     )
   }, [])
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [fetchData])
+  );
 
   return (
     <>

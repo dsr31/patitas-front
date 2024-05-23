@@ -21,7 +21,7 @@ const ForumCard = ({ content:{ id_forum, title, forum_image_1, content, name, us
             <View style = { [styles.forumShadow, styles.forumContainerImage] }>
                 {forum_image_1 !== '' && (
                     <Image
-                        source = { images }
+                        source = { {uri:forum_image_1}  }
                         style = { styles.forumImage }
                     />
                 )}

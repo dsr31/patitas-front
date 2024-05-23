@@ -35,7 +35,7 @@ const PetCard = ({ content:{ id_pet, pet_name, pet_profile_image, pet_descriptio
         <View style = { styles.upperSection }>
             <View style = {{width: '30%'}}>
                 <Image
-                    source = { pet_profile_image != '' ? {uri:pet_profile_image} : images.img_default_0 }
+                    source = { pet_profile_image != '' ? {uri:pet_profile_image} : images.img_default_1 }
                     style = { styles.createImage }
                 />
             </View>

@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity, Linking } from 'react-native'
+import { ActivityIndicator, Text, View, ScrollView, Image, SafeAreaView, TouchableOpacity, Linking, Modal } from 'react-native'
 import {React, useState, useEffect, useContext} from 'react'
 import { useLocalSearchParams, Stack, router } from 'expo-router'
 import images from '../../../../constants/images';
@@ -92,7 +92,7 @@ const DataPost = ({params}) => {
         setdateAdd(resultado.body[0].date_add.substring(0, 10));
         setpetDescription(resultado.body[0].pet_description);
         setlocation(resultado.body[0].address);
-        //setprofileImage(resultado.body[0].);
+        setprofileImage(resultado.body[0].user_profile_image);
         setauthor(resultado.body[0].name);
         setusername(resultado.body[0].username);
         setemail(resultado.body[0].email);
@@ -108,6 +108,48 @@ const DataPost = ({params}) => {
 
   const verPerfilUsuario = () => {
     router.push({ pathname: `./../../profiles/profile/${username}`, params: username}) 
+  }
+
+  const [isModalConfVisible, setModalConfVisible] = useState(false);
+  const confirmation = () => {
+    setModalConfVisible(true);
+  }
+  const modalConfClose = () => {
+    setModalConfVisible(false);
+  }
+  const ModalConfirmacion = () => (
+    <Modal transparent = { true } visible = { isModalConfVisible } animationType = "fade">
+      <View style = { styles.modalConfStyle }>
+        <View style = {{ width: '100%', paddingHorizontal: 30 }}>
+          <View style = { styles.modalConfTitle }>
+            <Text style = { styles.modalConfTitleText }>¿Estás seguro que quieres marcar como resuelto este post?</Text>
+          </View>
+          <View style = { styles.modalConfButtons }>
+            <TouchableOpacity onPress = { resolvePost } style = { styles.modalConfButton } >
+              <Text style = { styles.modalConfButtonText }>Sí, resolver</Text>
+            </TouchableOpacity>
+            <View style = {{ height: '100%', width: 1, backgroundColor: '#000' }} />
+            <TouchableOpacity onPress = { modalConfClose } style = { styles.modalConfButton }>
+              <Text style = { styles.modalConfButtonText }>No, cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+  let url_request = "http://192.168.231.18:4000/api/posts/resolve";
+  const resolvePost = async () => {
+    let enviarFormulario = await fetch( url_request, {
+        method: "PUT",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+            "id_post" : id_post, "status" : "1"
+        })
+      })
+      enviarFormulario = await enviarFormulario.json();
+      if(enviarFormulario){
+        router.push('/../(tabs)/profiles/');
+      }
   }
 
   const enviarMail = () => {
@@ -195,7 +237,7 @@ const DataPost = ({params}) => {
                     <View style = { styles.dividerLine } />
                     <TouchableOpacity style = {{ flexDirection: 'row', marginBottom: 12 }} onPress = {() => {verPerfilUsuario()}}>
                         <Image 
-                            source = { profileImage }
+                            source = { profileImage != '' ? {uri:profileImage} : images.img_default_4 }
                             style = { styles.profileImage }
                         />
                         <View>
@@ -226,10 +268,19 @@ const DataPost = ({params}) => {
                             <Image source = { icons.compartir } style = { styles.contactIcons }/>
                             <Text>Compartir Post</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style = { [styles.footerButton, { borderLeftColor: 'black', borderLeftWidth: 0.5 }] }>
-                            {/*<Image source = { icons.prohibido } style = { styles.contactIcons }/>*/}
-                            <Text style = {{ fontFamily:'Inter-Black', textAlign: 'center' }}>MARCAR COMO RESUELTO</Text>
-                        </TouchableOpacity>
+                        
+                            {usernameSession != username && (
+                                <TouchableOpacity style = { [styles.footerButton, { borderLeftColor: 'black', borderLeftWidth: 0.5 }] }>
+                                    <Image source = { icons.prohibido } style = { styles.contactIcons }/>
+                                    <Text>Reportar Post</Text>
+                                </TouchableOpacity>
+                            )}
+                            {usernameSession == username && (
+                                <TouchableOpacity style = { [styles.footerButton, { borderLeftColor: 'black', borderLeftWidth: 0.5 }] } onPress={confirmation}>
+                                    <Text style = {{ fontFamily:'Inter-Black', textAlign: 'center' }}>MARCAR COMO RESUELTO</Text>
+                                </TouchableOpacity>
+                            )}
+                        
                     </View>
                     <View>
                     {usernameSession == username && (<TouchableOpacity style = { styles.deleteButtonPost }>
@@ -239,6 +290,7 @@ const DataPost = ({params}) => {
                     {selectedImage && (
                         <ImageModal image = { selectedImage } visible = { modalVisible } closeImageModal = { closeModal } />
                     )}
+                    <ModalConfirmacion />
                 </ScrollView>
             </>
         )}
